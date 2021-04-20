@@ -25,7 +25,7 @@ class Game:
     def runGameMenu(self):
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
-        self.menu = pygame_menu.Menu('Marcola Snake Game', 300, 300,
+        self.menu = pygame_menu.Menu('Snake Game', 300, 300,
                        theme=pygame_menu.themes.THEME_SOLARIZED)
         self.clock = pygame.time.Clock()
         self.menu.add.button('Play', self.runGame)        
