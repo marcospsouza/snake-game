@@ -27,12 +27,12 @@ class Game:
     def runGameMenu(self):
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
-        self.menu = pygame_menu.Menu(300, 300, 'Marcola Snake Game',
+        self.menu = pygame_menu.Menu('Marcola Snake Game', 300, 300,
                        theme=pygame_menu.themes.THEME_SOLARIZED)
         self.clock = pygame.time.Clock()
-        self.menu.add_button('Play', self.runGame)        
-        self.menu.add_selector('Walls: ', [('Yes', True), ('No', False)], onchange=self.setWalls)
-        self.menu.add_button('Quit', pygame_menu.events.EXIT)
+        self.menu.add.button('Play', self.runGame)        
+        self.menu.add.selector('Walls: ', [('Yes', True), ('No', False)], onchange=self.setWalls)
+        self.menu.add.button('Quit', pygame_menu.events.EXIT)
         self.menu.mainloop(self.screen)
 
     def runGame(self):
