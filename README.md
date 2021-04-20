@@ -1,5 +1,5 @@
 # snake-game
-Snake game in python
+Snake game in python using pygame
 
 
 TO-DO:
