@@ -15,6 +15,7 @@ class Game:
     def __init__(self, width, height, initialSnakeSize):
         self.width = width
         self.height = height
+        self.initialSnakeSize = initialSnakeSize
 
         self.snake = Snake(width, height, Color.GREEN.value, initialSnakeSize)
         self.apple = Apple(width, height, Color.RED.value)
