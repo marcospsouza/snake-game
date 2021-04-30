@@ -1,5 +1,12 @@
+import configparser
 from game.game import Game
 
 if __name__ == "__main__":
-    game = Game(300, 300) # using hardcoded window size for now
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    width = int(config['DEFAULT']['width'])
+    height = int(config['DEFAULT']['height'])
+    snakeSize = int(config['DEFAULT']['initialSnakeSize'])
+
+    game = Game(width, height, snakeSize)
     game.runGameMenu()

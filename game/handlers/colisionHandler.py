@@ -1,5 +1,8 @@
 
 from ..utils.direction import Direction
+from ..objects.snake import Snake
+from ..objects.apple import Apple
+
 import random
 
 class ColisionHandler():
@@ -15,8 +18,8 @@ class ColisionHandler():
 
     def detectWallColision(self, game):        
         if game.drawWalls and game.snake.snakeBody[0] in game.wall.cells:     
-            game.snake = game.createSnake((0, 255, 0), 3)
-            game.apple = game.createApple((255, 0, 0))
+            game.snake = Snake(game.width, game.height, (0, 255, 0), 3)
+            game.apple = Apple(game.width, game.height, (255, 0, 0))
             game.direction = Direction.UP
             game.runGameMenu()
 
@@ -24,8 +27,8 @@ class ColisionHandler():
         for i in range(len(game.snake.snakeBody)):
             for j in range(len(game.snake.snakeBody)):
                 if i != j and game.snake.snakeBody[i] == game.snake.snakeBody[j]:       
-                    game.snake = game.createSnake((0, 255, 0), 3)
-                    game.apple = game.createApple((255, 0, 0))
+                    game.snake = Snake(game.width, game.height, (0, 255, 0), 3)
+                    game.apple = Apple(game.width, game.height, (255, 0, 0))
                     game.direction = Direction.UP
                     game.runGameMenu()
                     break

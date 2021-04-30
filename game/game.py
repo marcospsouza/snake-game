@@ -7,17 +7,20 @@ from .objects.snake import Snake
 from .objects.apple import Apple
 from .objects.wall import Wall
 from .utils.direction import Direction
+from .utils.color import Color
 from .handlers.eventHandler import EventHandler
 from .handlers.colisionHandler import ColisionHandler
 
 class Game:
-    def __init__(self, width, height):
+    def __init__(self, width, height, initialSnakeSize):
         self.width = width
         self.height = height
-        self.snake = self.createSnake((0, 255, 0), 3)
-        self.apple = self.createApple((255, 0, 0))
+
+        self.snake = Snake(width, height, Color.GREEN.value, initialSnakeSize)
+        self.apple = Apple(width, height, Color.RED.value)
+        self.wall = Wall(width, height, Color.GREY.value)
         self.drawWalls = True
-        self.wall = self.createWall((128, 128, 128))
+
         self.direction = Direction.UP
 
     def setWalls(self, tuple, value):
@@ -26,7 +29,7 @@ class Game:
     def runGameMenu(self):
         pygame.init()
         self.screen = pygame.display.set_mode((self.width, self.height))
-        self.menu = pygame_menu.Menu('Snake Game', 300, 300,
+        self.menu = pygame_menu.Menu('Snake Game', self.width, self.height,
                        theme=pygame_menu.themes.THEME_SOLARIZED)
         self.clock = pygame.time.Clock()
         self.menu.add.button('Play', self.runGame)        
@@ -41,7 +44,7 @@ class Game:
             self.clock.tick(20)
             eventHandler.handleKeyboardEvents(self)
             colisionHandler.detectColisions(self)
-            self.updateElements()
+            eventHandler.updateElements(self)
             self.drawElements(self.screen)
 
     def drawElements(self, screen):
@@ -54,36 +57,4 @@ class Game:
             for wallCell in self.wall.cells:
                 screen.blit(self.wall.skin, wallCell)
 
-        pygame.display.update()  
-
-    def updateElements(self):
-        for i in range(len(self.snake.snakeBody)-1, 0, -1):
-            self.snake.snakeBody[i] = (self.snake.snakeBody[i-1][0], self.snake.snakeBody[i-1][1])
-
-        if self.direction == Direction.UP:
-            self.snake.snakeBody[0] = (self.snake.snakeBody[0][0], self.snake.snakeBody[0][1] - 10)
-        if self.direction == Direction.DOWN:
-            self.snake.snakeBody[0] = (self.snake.snakeBody[0][0], self.snake.snakeBody[0][1] + 10)
-        if self.direction == Direction.LEFT:
-            self.snake.snakeBody[0] = (self.snake.snakeBody[0][0] - 10, self.snake.snakeBody[0][1])
-        if self.direction == Direction.RIGHT:
-            self.snake.snakeBody[0] = (self.snake.snakeBody[0][0] + 10, self.snake.snakeBody[0][1])
-        
-        if self.snake.snakeBody[0][0] < 0:
-            self.snake.snakeBody[0] = (self.width-10, self.snake.snakeBody[0][1])
-        if self.snake.snakeBody[0][0] > self.width:
-            self.snake.snakeBody[0] = (10, self.snake.snakeBody[0][1])
-
-        if self.snake.snakeBody[0][1] < 0:
-            self.snake.snakeBody[0] = (self.snake.snakeBody[0][0], self.height-10)
-        if self.snake.snakeBody[0][1] > self.height:
-            self.snake.snakeBody[0] = (self.snake.snakeBody[0][0], 10)
-
-    def createSnake(self, color, initialSize):
-        return Snake(self, color, initialSize)
-
-    def createApple(self, color):
-        return Apple(self, color)
-
-    def createWall(self, color):
-        return Wall(self, color)
+        pygame.display.update()
