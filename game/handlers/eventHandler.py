@@ -9,15 +9,16 @@ class EventHandler:
             if event.type == QUIT:
                 pygame.quit()
             if event.type == KEYDOWN:
-                if event.key == K_UP and game.direction != Direction.DOWN:
+                key = event.key
+                if (key == K_UP or key == K_w) and game.direction != Direction.DOWN:
                     game.direction = Direction.UP
-                if event.key == K_DOWN and game.direction != Direction.UP:
+                if (key == K_DOWN or key == K_s) and game.direction != Direction.UP:
                     game.direction = Direction.DOWN
-                if event.key == K_LEFT and game.direction != Direction.RIGHT:
+                if (key == K_LEFT or key == K_a) and game.direction != Direction.RIGHT:
                     game.direction = Direction.LEFT
-                if event.key == K_RIGHT and game.direction != Direction.LEFT:
+                if (key == K_RIGHT or key== K_d) and game.direction != Direction.LEFT:
                     game.direction = Direction.RIGHT
-                if event.key == K_ESCAPE:
+                if key == K_ESCAPE:
                     game.runGameMenu()
 
     def updateElements(self, game):

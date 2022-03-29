@@ -1,7 +1,6 @@
 # snake-game
 Snake game in python using pygame
 
-
 TO-DO:
 
 * Remove hardcoded values
